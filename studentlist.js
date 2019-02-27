@@ -42,14 +42,17 @@ function prepareObjects(jsonData) {
 
     // how we want the data to be displayed:
     student.firstname = parts[0];
+
     // to get ONLY the last name, we should have the length of the parts -1
     student.lastname = parts[parts.length - 1];
 
     // this should be accessed directly from the json-file and not split like the fullname
     student.house = jsonObject.house;
 
-    // TODO: her skal der indsættes img'er ved hjælp af uppercase/ lowercase, imagename er tilføjet
-    // vores prototype under de globale variabler
+    // this is how we connect the img-files to the lastname of the students.
+    const lastnameLowcase = parts[parts.length - 1].toLowerCase();
+    const firstletterLowcase = parts[0].substring(0, 1).toLowerCase();
+    student.imagename = `images/${lastnameLowcase}_${firstletterLowcase}.png`;
 
     // this stores all our students in a global array
     allStudents.push(student);
@@ -63,47 +66,54 @@ function filterList() {
   // the list should be sorted befor it is dispalyed
   sortList(filteredList);
 }
-function sortList(filteredList) {
+function sortList(filteredList, list) {
   console.log("sortList");
 
-  // TODO: her skal functionskalde med if statments der fortæller
-  // noget med at vores string er === så somthing-somthing ellers ..
-  // compareFirstname();
-  // compareLastname();
-  //compareHouse();
+  let sortedData;
+
+  if (filteredList === "") {
+    sortedData = list;
+  }
+  if (filteredList === "firstname") {
+    sortedData = list.sort(compareFirstname);
+  }
+  if (filteredList === "lastname") {
+    sortedData = list.sort(compareLastname);
+  }
+  if (filteredList === "house") {
+    sortedData = list.sort(compareHouse);
+  }
+
   displayList(filteredList);
 }
 
 function compareFirstname(a, b) {
-  // TODO:
-  // if (a.firstname < b.firstname){
-  // return -1;
-  // } else {
-  //  return 1;
-  // }
+  if (a.firstname < b.firstname) {
+    return -1;
+  } else {
+    return 1;
+  }
   console.log("compareFirstname");
 }
 
 function compareLastname() {
-  console.log("compareLastname");
+  if (a.lastname < b.lastname) {
+    return -1;
+  } else {
+    return 1;
+  }
 
-  // TODO:
-  // if (a.lastname < b.lastname){
-  // return -1;
-  // } else {
-  //  return 1;
-  // }
+  console.log("compareLastname");
 }
 
 function compareHouse() {
-  console.log("compareHouse");
+  if (a.house < b.house) {
+    return -1;
+  } else {
+    return 1;
+  }
 
-  // TODO:
-  // if (a.house < b.house){
-  // return -1;
-  // } else {
-  //  return 1;
-  // }
+  console.log("compareHouse");
 }
 
 function displayList(student) {
@@ -117,6 +127,9 @@ function displayList(student) {
 // the VISUEL part of the code
 
 function displayStudent(student) {
+  console.log(displayStudent);
+  // list.forEach(displayStudent, list);
+
   // creates a clone from our student
   let studentclone = document
     .querySelector("template#student")
