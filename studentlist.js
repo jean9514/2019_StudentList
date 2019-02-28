@@ -12,12 +12,28 @@ let Student = {
 
 const allStudents = [];
 
+let sorting = "last";
+
 function init() {
   console.log("init");
 
-  loadJSON();
+  // eventlistners on buttons, reacts to wich functions clicked
+  document.getElementById("btn_house").addEventListener("click", function() {
+    compareHouse(filteredList);
+  });
 
-  // TODO: build list, add event listeners, show modal, find images, and other stuff ...
+  document
+    .getElementById("btn_firstname")
+    .addEventListener("click", function() {
+      sorting = "first";
+      filterList();
+    });
+
+  document.getElementById("btn_lastname").addEventListener("click", function() {
+    compareHouse(filteredList);
+  });
+
+  loadJSON();
 }
 
 function loadJSON() {
@@ -28,19 +44,11 @@ function loadJSON() {
       // when the json-file gets loaded, it prepares objects.
       prepareObjects(myJson);
     });
-
-  // document.querySelectorAll(".sort-button").forEach(sortingButton => {
-  //   sortingButton.addEventListener("click", compareFirstname);
-
-  //   document.querySelectorAll(".sort-button").forEach(sortingButton => {
-  //     sortingButton.addEventListener("click", compareLastname);
-
-  //     document.querySelectorAll(".sort-button").forEach(sortingButton => {
-  //       sortingButton.addEventListener("click", compareHouse);
 }
 
 // the DATA part of the code
 
+// this function splits our data from the json-file into parts( firstname and lastname and so on)
 function prepareObjects(jsonData) {
   jsonData.forEach(jsonObject => {
     // create a new student object from our student variable
@@ -70,32 +78,38 @@ function prepareObjects(jsonData) {
   filterList();
 }
 
+// this function filters the array of students befor pasing it allong to be sortet.
 function filterList() {
   const filteredList = allStudents;
-  // the list should be sorted befor it is dispalyed
+  // the sortList should be filtered befor displayed as SORTED.
   sortList(filteredList);
 }
-function sortList(filteredList, list) {
+
+// this functions returns the array of sorted students after the click on the button
+function sortList(filteredList) {
   console.log("sortList");
 
-  let sortedData;
-
-  if (filteredList === "") {
-    sortedData = list;
-  }
-  if (filteredList === "firstname") {
-    sortedData = list.sort(compareFirstname);
-  }
-  if (filteredList === "lastname") {
-    sortedData = list.sort(compareLastname);
-  }
-  if (filteredList === "house") {
-    sortedData = list.sort(compareHouse);
-  }
-
+  if (sorting === "first") {
+    sortByFirstname(filteredList);
+  } else {
+    sortByLastname(filteredList);
+  } 
+  // the list of students that eventually hare dispalyed after sorted.
   displayList(filteredList);
 }
 
+function sortByFirstname(filteredList) {
+  filteredList.sort(compareFirstname);
+}
+function sortByLastname(filteredList) {
+  filteredList.sort(compareLastname);
+}
+function sortByHouse(filteredList) {
+  filteredList.sort(compareHouse);
+}
+
+
+//  the next 3 functions
 function compareFirstname(a, b) {
   if (a.firstname < b.firstname) {
     return -1;
@@ -106,7 +120,7 @@ function compareFirstname(a, b) {
   console.log("compareFirstname");
 }
 
-function compareLastname() {
+function compareLastname(a, b) {
   if (a.lastname < b.lastname) {
     return -1;
   } else {
@@ -137,8 +151,7 @@ function displayList(student) {
 // the VISUEL part of the code
 
 function displayStudent(student) {
-  console.log(displayStudent);
-  // list.forEach(displayStudent, list);
+  console.log(student);
 
   // creates a clone from our student
   let studentclone = document
