@@ -28,6 +28,15 @@ function loadJSON() {
       // when the json-file gets loaded, it prepares objects.
       prepareObjects(myJson);
     });
+
+  // document.querySelectorAll(".sort-button").forEach(sortingButton => {
+  //   sortingButton.addEventListener("click", compareFirstname);
+
+  //   document.querySelectorAll(".sort-button").forEach(sortingButton => {
+  //     sortingButton.addEventListener("click", compareLastname);
+
+  //     document.querySelectorAll(".sort-button").forEach(sortingButton => {
+  //       sortingButton.addEventListener("click", compareHouse);
 }
 
 // the DATA part of the code
@@ -93,6 +102,7 @@ function compareFirstname(a, b) {
   } else {
     return 1;
   }
+
   console.log("compareFirstname");
 }
 
