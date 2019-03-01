@@ -1,8 +1,67 @@
 body {
-  background-image: url("images/oldPaper.jpg");
+  background-image: url("images/background.png");
   background-repeat: no-repeat;
   background-size: cover;
 }
+
+
+h1 {
+  font-family: "Charm", cursive;
+  text-align: center;
+  text-shadow: 3px 0px #060000;
+  color: #f0dac3;
+}
+
+header{
+  display: inline-block;
+  margin-left: 40vh;
+}
+
+
+.sort-button{
+  background-color: rgb(109, 113, 109);
+  border-radius: 12px;
+  border: none;
+  color: white;
+  text-align: center;
+  font-size: 11px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+}
+
+.sort-button {
+  background-color: white; 
+  color: black; 
+  border: 1px solid #060000;
+}
+
+.sort-button:hover {
+  background-color:  rgb(107, 109, 107);
+  color: white;
+}
+
+.filter-button{
+  background-color: rgb(109, 113, 109);
+  border-radius: 12px;
+  border: none;
+  color: white;
+  text-align: center;
+  font-size: 11px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+}
+
+.filter-button {
+  background-color: white; 
+  color: black; 
+  border: 1px solid #060000;
+}
+
+.filter-button:hover {
+  background-color:  rgb(107, 109, 107);
+  color: white;
+}
+
 
 .gryffindor {
   background-color: #ce3a0a;
@@ -24,9 +83,39 @@ body {
   color: #c0b1c6;
 }
 
-h1 {
-  font-family: "Charm", cursive;
+
+#modal {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  background-color: rgba(0, 0, 0, .7);
+  text-align: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 1s;
 }
 
-button {
+#modal-content {
+  width: 70vw;
+  height: 70vh;
+  background-color: rgba(250, 250, 250, 1);
+  margin: 0 auto;
+
+}
+
+#modal-content button{
+  position: absolute;
+  margin-top: 6px;
+  margin-left: 15px;
+}
+
+#modal.show {
+  opacity: 1;
+  pointer-events: all;
+
+}
+
+#modalImage {
+  height: 13vh;
+  object-fit: scale-down;
 }

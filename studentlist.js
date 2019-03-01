@@ -7,13 +7,14 @@ let Student = {
   firstname: "-student-firstname-",
   lastname: "-student-lastname-",
   house: "-house-",
-  imagename: "-imagename-"
+  imagename: "-imagename-",
+  crest: "-crest-"
 };
-let selectedFilter = "All Students";
 
+let selectedFilter = "All Students";
 const allStudents = [];
 let sorting = " ";
-
+let modal = document.querySelector("#modal");
 
 
 function init() {
@@ -51,6 +52,12 @@ function loadJSON() {
       prepareObjects(myJson);
     });
 }
+// this functions displayes the choosen filter button
+function clickFilterHouse( event ) {
+  selectedFilter = event.target.dataset.house;
+
+  filterList();
+}
 
 // the DATA part of the code
 
@@ -77,6 +84,7 @@ function prepareObjects(jsonData) {
     const lastnameLowcase = parts[parts.length - 1].toLowerCase();
     const firstletterLowcase = parts[0].substring(0, 1).toLowerCase();
     student.imagename = `images/${lastnameLowcase}_${firstletterLowcase}.png`;
+    // student.crest = `imgCrests/.png`;
 
     // this stores all our students in a global array
     allStudents.push(student);
@@ -85,13 +93,6 @@ function prepareObjects(jsonData) {
   filterList();
 }
 
-function clickFilterHouse( event ) {
-  // Der ER klikket på en knap
-  // men hvilken?
-  selectedFilter = event.target.dataset.house;
-
-  filterList();
-}
 
 // this function filters the array of students befor pasing it allong to be sortet.
 function filterList( ) {
@@ -182,17 +183,39 @@ function displayStudent(student) {
   console.log(student);
 
   // creates a clone from our student
-  let studentclone = document
-    .querySelector("template#student")
-    .content.cloneNode(true);
+  let studentclone = document.querySelector("template#student").content.cloneNode(true);
 
   // this sets the data for the clone
-  studentclone.querySelector("[data-field=firstname]").textContent =
-    student.firstname;
-  studentclone.querySelector("[data-field=lastname]").textContent =
-    student.lastname;
+  studentclone.querySelector("[data-field=firstname]").textContent = student.firstname;
+  studentclone.querySelector("[data-field=lastname]").textContent = student.lastname;
   studentclone.querySelector("[data-field= house]").textContent = student.house;
+  
+
+  studentclone.querySelector("[data-field=firstname]").addEventListener("click", ()=> {
+    showModal(student);
+  });
+
 
   // then oure clone is appendet to our list
   document.querySelector("#list tbody").appendChild(studentclone);
+}
+
+function showModal(student) {
+
+  //when clicked, this is dispalyed within the modal view
+  modal.classList.add("show");
+  modal.querySelector(".modalName").textContent = student.fullname;
+  modal.querySelector(".modalImage").src = student.imagename;
+  modal.querySelector(".modalHouse").textContent = student.house;
+  // modal.querySelector("modalCrest").src = student.crest;
+ 
+  // modal.querySelector(".crest").src = "imgCrests/" + studenten.house + ".png";
+  
+  //when clicked, closes the modal
+  modal.querySelector("button").addEventListener("click", hideModal);
+}
+
+// this is hiding the modal from the dom
+function hideModal() {
+  modal.classList.remove("show");
 }
