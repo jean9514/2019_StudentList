@@ -12,15 +12,22 @@
     />
   </head>
   <body>
-    <h1>Students of Hogwards 1991</h1>
 
-    <button class="sort-button" id="btn_house">Sort by House</button>
-    <button class="sort-button" id="btn_firstname">
-      Sort by Firstname
-    </button>
-    <button class="sort-button" id="btn_lastname">
-      Sort by Lastname
-    </button>
+      <header>
+          <h1>Students of Hogwards 1991</h1>
+          <!-- navigation buttons w/ filter and sort functions-->
+          <nav>
+            <button class="filter-button" data-house="All Students">All Students</button>
+            <button class="filter-button" data-house="Hufflepuff">Hufflepuff</button>
+            <button class="filter-button" data-house="Gryffindor">Gryffindor</button>
+            <button class="filter-button" data-house="Ravenclaw">Ravenclaw</button>
+            <button class="filter-button" data-house="Slytherin">Slytherin</button>
+
+            <button class="sort-button" id="btn_house">House</button>
+            <button class="sort-button" id="btn_firstname">Firstname</button>
+            <button class="sort-button" id="btn_lastname">Lastname</button>
+          </nav>
+        </header>
 
     <!-- insted of grid we display Stud.list in a table because of the way we display student name. -->
     <table id="list">

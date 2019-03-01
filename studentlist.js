@@ -9,28 +9,34 @@ let Student = {
   house: "-house-",
   imagename: "-imagename-"
 };
+let selectedFilter = "All Students";
 
 const allStudents = [];
+let sorting = " ";
 
-let sorting = "last";
+
 
 function init() {
   console.log("init");
 
-  // eventlistners on buttons, reacts to wich functions clicked
-  document.getElementById("btn_house").addEventListener("click", function() {
-    compareHouse(filteredList);
+  document.querySelectorAll(".filter-button").forEach(button => {
+    button.addEventListener("click", clickFilterHouse);
   });
 
-  document
-    .getElementById("btn_firstname")
-    .addEventListener("click", function() {
+  // eventlistners on buttons, reacts to wich functions clicked
+  document.getElementById("btn_house").addEventListener("click", function() {
+    sorting = "house";
+    filterList();
+  });
+
+  document.getElementById("btn_firstname").addEventListener("click", function() {
       sorting = "first";
       filterList();
     });
 
   document.getElementById("btn_lastname").addEventListener("click", function() {
-    compareHouse(filteredList);
+    sorting = "last";
+    filterList();
   });
 
   loadJSON();
@@ -51,6 +57,7 @@ function loadJSON() {
 // this function splits our data from the json-file into parts( firstname and lastname and so on)
 function prepareObjects(jsonData) {
   jsonData.forEach(jsonObject => {
+
     // create a new student object from our student variable
     const student = Object.create(Student);
 
@@ -78,9 +85,28 @@ function prepareObjects(jsonData) {
   filterList();
 }
 
+function clickFilterHouse( event ) {
+  // Der ER klikket på en knap
+  // men hvilken?
+  selectedFilter = event.target.dataset.house;
+
+  filterList();
+}
+
 // this function filters the array of students befor pasing it allong to be sortet.
-function filterList() {
-  const filteredList = allStudents;
+function filterList( ) {
+  
+  function filterByHouse( student ) {
+    if( selectedFilter === "All Students" ) {
+      return true;
+    } else {
+      return student.house === selectedFilter;
+    }
+  }
+
+  let filteredList = allStudents.filter( filterByHouse );
+  console.log( filteredList );
+
   // the sortList should be filtered befor displayed as SORTED.
   sortList(filteredList);
 }
@@ -91,9 +117,11 @@ function sortList(filteredList) {
 
   if (sorting === "first") {
     sortByFirstname(filteredList);
-  } else {
+  } else if (sorting === "last") {
     sortByLastname(filteredList);
-  } 
+   } else if (sorting === "house") {
+    sortByHouse(filteredList);
+  }
   // the list of students that eventually hare dispalyed after sorted.
   displayList(filteredList);
 }
@@ -130,7 +158,7 @@ function compareLastname(a, b) {
   console.log("compareLastname");
 }
 
-function compareHouse() {
+function compareHouse(a, b) {
   if (a.house < b.house) {
     return -1;
   } else {
