@@ -202,13 +202,13 @@ function displayStudent(student) {
 
 function showModal(student) {
 
+  // NOTE! i can get fullname and crest to show, if i un toggle the 
   //when clicked, this is dispalyed within the modal view
   modal.classList.add("show");
   modal.querySelector(".modalName").textContent = student.fullname;
   modal.querySelector(".modalImage").src = student.imagename;
   modal.querySelector(".modalHouse").textContent = student.house;
-  // modal.querySelector("modalCrest").src = student.crest;
- 
+  
   // modal.querySelector(".crest").src = "imgCrests/" + studenten.house + ".png";
   
   
