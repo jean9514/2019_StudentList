@@ -33,7 +33,7 @@ nav{
 
 #list tr {
   background-color: #f2f2f2;
-  opacity: 50%;
+  
 }
 /* #list tr:nth-child(even){background-color: #f2f2f2;} */
 
@@ -46,9 +46,6 @@ nav{
   background-color: #f0dac3;;
   color: black;
   font: bold;
-}
-button{
-  
 }
 
 .sort-button{
@@ -117,10 +114,9 @@ button{
   color: #c0b1c6;
 }
 
-
 #modal {
-  width: 100vw;
-  height: 100vh;
+  width: 25vw;
+  height: 50vh;
   position: fixed;
   background-color: rgba(0, 0, 0, .7);
   text-align: center;
@@ -130,10 +126,11 @@ button{
 }
 
 #modal-content {
-  width: 70vw;
+  width: 50vw;
   height: 70vh;
   background-color: rgba(250, 250, 250, 1);
   margin: 0 auto;
+  
 
 }
 
@@ -149,7 +146,7 @@ button{
 
 }
 
-#modalImage {
-  height: 13vh;
+ #modalImage {
   object-fit: scale-down;
+  margin-top: 33px;
 }
