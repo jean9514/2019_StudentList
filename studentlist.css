@@ -12,11 +12,44 @@ h1 {
   color: #f0dac3;
 }
 
-header{
-  display: inline-block;
-  margin-left: 40vh;
+nav{
+  text-align: center;
 }
 
+#list {
+  font-family: "Charm", cursive;
+  border-collapse: collapse;
+  width: 50%;
+  margin-top: 5px;
+  margin-left:auto; 
+  margin-right:auto;
+  
+}
+
+#list td, #list th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#list tr {
+  background-color: #f2f2f2;
+  opacity: 50%;
+}
+/* #list tr:nth-child(even){background-color: #f2f2f2;} */
+
+#list tr:hover {background-color: #f0dac3;}
+
+#list th {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  text-align: center;
+  background-color: #f0dac3;;
+  color: black;
+  font: bold;
+}
+button{
+  
+}
 
 .sort-button{
   background-color: rgb(109, 113, 109);
@@ -27,10 +60,11 @@ header{
   font-size: 11px;
   transition-duration: 0.4s;
   cursor: pointer;
+  
 }
 
 .sort-button {
-  background-color: white; 
+  background-color: #f0dac3; 
   color: black; 
   border: 1px solid #060000;
 }
@@ -52,7 +86,7 @@ header{
 }
 
 .filter-button {
-  background-color: white; 
+  background-color: #f0dac3; 
   color: black; 
   border: 1px solid #060000;
 }

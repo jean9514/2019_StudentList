@@ -211,6 +211,7 @@ function showModal(student) {
  
   // modal.querySelector(".crest").src = "imgCrests/" + studenten.house + ".png";
   
+  
   //when clicked, closes the modal
   modal.querySelector("button").addEventListener("click", hideModal);
 }
