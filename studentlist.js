@@ -13,7 +13,8 @@ let Student = {
 };
 
 let selectedFilter = "All Students";
-const allStudents = [];
+let allStudents = [];
+let expelledStudArray = [];
 let sorting = " ";
 let modal = document.querySelector("#modal");
 
@@ -41,7 +42,10 @@ function init() {
     filterList();
   });
 
-  loadJSON();
+  
+
+  loadSecondJSON();
+  
 }
 
 function loadJSON() {
@@ -53,6 +57,19 @@ function loadJSON() {
       prepareObjects(myJson);
     });
 }
+
+function loadSecondJSON() {
+  console.log("loadJSON");
+  fetch("http://petlatkea.dk/2019/hogwarts/families.json")
+    .then(response => response.json())
+    .then(myJson => {
+      // when the json-file gets loaded, it prepares objects.
+      // prepareObjects(myJson);
+      loadJSON();
+    });
+}
+
+
 // this functions displayes the choosen filter button
 function clickFilterHouse( event ) {
   selectedFilter = event.target.dataset.house;
@@ -64,11 +81,11 @@ function clickFilterHouse( event ) {
 
 // this function splits our data from the json-file into parts( firstname and lastname and so on)
 function prepareObjects(jsonData) {
-  jsonData.forEach(jsonObject => {
+  jsonData.forEach((jsonObject, key) => {
 
     // create a new student object from our student variable
     const student = Object.create(Student);
-
+    student.id = key;
     //the data from our Json-file that we want to split.
     const parts = jsonObject.fullname.split(" ");
 
@@ -172,6 +189,24 @@ function compareHouse(a, b) {
   console.log("compareHouse");
 }
 
+function expellStudent(student) {
+	// this is adding the expelled student into an array of the expelled students.
+    expelledStudArray.push(student);
+
+	// remove the student from the 
+    allStudents = allStudents.filter(elem => elem.id !== student.id);
+
+    // remove the student from the original student array 
+    allStudents = allStudents.filter(elem => elem.id !== student.id);
+
+    // redisplay "new" array but now without the students that has been expelled
+  displayList(allStudents);
+  console.log(student);
+
+	// change stats after a person is removed
+    // updateStatistics();
+}
+
 function displayList(student) {
   // this clears our student list after filtering
   document.querySelector("#list tbody").innerHTML = "";
@@ -197,6 +232,9 @@ function displayStudent(student) {
   studentclone.querySelector("[data-field=firstname]").addEventListener("click", ()=> {
     showModal(student);
   });
+  studentclone.querySelector("[data-action= remove]").addEventListener("click", ()=>{
+  expellStudent(student)
+});
 
 
   // then oure clone is appendet to our list
@@ -206,14 +244,44 @@ function displayStudent(student) {
 function showModal(student) {
 
   console.log(student);
-  // NOTE! i can get fullname and crest to show, if i un toggle the 
-  //when clicked, this is dispalyed within the modal view
+  
   modal.classList.add("show");
   modal.querySelector(".modalName").textContent = student.fullname;
   modal.querySelector(".modalImage").src = student.imagename;
   modal.querySelector(".modalHouse").textContent = student.house;
   
-  // modal.querySelector(".crest").src = "imgCrests/" + studenten.house + ".png";
+  if (student.house == "Gryffindor") {
+    modal.querySelector("[class= modalCrest]").src =
+      "imgCrests/Gryffindor.png";
+    modal.querySelector("#modal-content").classList.add("gryffindor");
+  } else {
+    modal.querySelector("#modal-content").classList.remove("gryffindor");
+  }
+
+  if (student.house == "Hufflepuff") {
+    modal.querySelector("[class= modalCrest]").src =
+      "imgCrests/Hunfflepuff.png";
+    modal.querySelector("#modal-content").classList.add("hufflepuf");
+  } else {
+    modal.querySelector("#modal-content").classList.remove("hufflepuf");
+  }
+
+  if (student.house == "Ravenclaw") {
+    modal.querySelector("[class= modalCrest]").src =
+      "imgCrests/Ravenclaw.png";
+    modal.querySelector("#modal-content").classList.add("ravenclaw");
+  } else {
+    modal.querySelector("#modal-content").classList.remove("ravenclaw");
+  }
+
+  if (student.house == "Slytherin") {
+    modal.querySelector("[class= modalCrest]").src =
+      "imgCrests/Slytherin.png";
+    modal.querySelector("#modal-content").classList.add("slytherin");
+  } else {
+    modal.querySelector("#modal-content").classList.remove("slytherin");
+  }
+
   
   
   //when clicked, closes the modal
