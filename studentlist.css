@@ -2,8 +2,8 @@ body {
   background-image: url("images/background.png");
   background-repeat: no-repeat;
   background-size: cover;
+  /* this should be fixed so that its not affected by the size of the stud.list */
 }
-
 
 h1 {
   font-family: "Charm", cursive;
@@ -12,10 +12,16 @@ h1 {
   color: #f0dac3;
 }
 
+/* navigation */
 nav{
   text-align: center;
 }
 
+
+/* Table of students*/
+
+/* TODO: could be fun to make this scrollabel, so that its the list that scrolls
+and not the page */
 #list {
   font-family: "Charm", cursive;
   border-collapse: collapse;
@@ -23,7 +29,6 @@ nav{
   margin-top: 5px;
   margin-left:auto; 
   margin-right:auto;
-  
 }
 
 #list td, #list th {
@@ -35,9 +40,10 @@ nav{
   background-color: #f2f2f2;
   
 }
-/* #list tr:nth-child(even){background-color: #f2f2f2;} */
 
-#list tr:hover {background-color: #f0dac3;}
+#list tr:hover {
+  background-color: #f0dac3;
+}
 
 #list th {
   padding-top: 8px;
@@ -48,29 +54,7 @@ nav{
   font: bold;
 }
 
-.sort-button{
-  background-color: rgb(109, 113, 109);
-  border-radius: 12px;
-  border: none;
-  color: white;
-  text-align: center;
-  font-size: 11px;
-  transition-duration: 0.4s;
-  cursor: pointer;
-  
-}
-
-.sort-button {
-  background-color: #f0dac3; 
-  color: black; 
-  border: 1px solid #060000;
-}
-
-.sort-button:hover {
-  background-color:  rgb(107, 109, 107);
-  color: white;
-}
-
+/* filtering */
 .filter-button{
   background-color: rgb(109, 113, 109);
   border-radius: 12px;
@@ -93,27 +77,30 @@ nav{
   color: white;
 }
 
-
-.gryffindor {
-  background-color: #ce3a0a;
-  color: #fdb02e;
+/* Sorting */
+.sort-button{
+  background-color: rgb(109, 113, 109);
+  border-radius: 12px;
+  border: none;
+  color: white;
+  text-align: center;
+  font-size: 11px;
+  transition-duration: 0.4s;
+  cursor: pointer;
 }
 
-.hufflepuf {
-  background-color: #ffc02a;
-  color: #0b0000;
+.sort-button {
+  background-color: #f0dac3; 
+  color: black; 
+  border: 1px solid #060000;
 }
 
-.ravenclaw {
-  background-color: #395f9d;
-  color: #e9ba36;
+.sort-button:hover {
+  background-color:  rgb(107, 109, 107);
+  color: white;
 }
 
-.slytherin {
-  background-color: #588c39;
-  color: #c0b1c6;
-}
-
+/* modal and content */
 #modal {
   top: 20%;
   left: 20%;
@@ -125,7 +112,6 @@ nav{
   opacity: 0;
   pointer-events: none;
   transition: all 1s;
-  
 }
 
 #modal-content {
@@ -153,7 +139,26 @@ nav{
 }
 
 .modalCrest{
-  /* TODO: re-size the crest!! */
   width: 16vh;
-
 } 
+
+/* house colors in modal */
+.gryffindor {
+  background-color: #ce3a0a;
+  color: #fdb02e;
+}
+
+.hufflepuf {
+  background-color: #ffc02a;
+  color: #0b0000;
+}
+
+.ravenclaw {
+  background-color: #395f9d;
+  color: #e9ba36;
+}
+
+.slytherin {
+  background-color: #588c39;
+  color: #c0b1c6;
+}

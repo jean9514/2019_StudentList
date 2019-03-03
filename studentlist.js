@@ -13,6 +13,7 @@ let Student = {
   crest: "-crest-"
 };
 
+// global variabls
 let selectedFilter = "All Students";
 let allStudents = [];
 let filteredList = [];
@@ -21,7 +22,7 @@ let sorting = " ";
 let bloodList  = [];
 let modal = document.querySelector("#modal");
 
-
+// this function listens to all of the sort and filter buttons + loads secondJson file
 function init() {
   // console.log("init");
 
@@ -45,12 +46,10 @@ function init() {
     filterList();
   });
 
-  
-
-  loadSecondJSON();
-  
+  loadSecondJSON(); 
 }
 
+// the json file with stud fullname and house
 function loadJSON() {
   console.log("loadJSON");
   fetch("http://petlatkea.dk/2019/hogwarts/students.json")
@@ -60,7 +59,7 @@ function loadJSON() {
       prepareObjects(myJson);
     });
 }
-
+// the json file with familys
 function loadSecondJSON() {
   console.log("loadJSON");
   fetch("http://petlatkea.dk/2019/hogwarts/families.json")
@@ -68,6 +67,7 @@ function loadSecondJSON() {
     .then(getBlood)
 }
 
+// theis function makes a array of bloodData
 function getBlood(bloodData){
   bloodList = bloodData;
   loadJSON();
@@ -120,9 +120,10 @@ function prepareObjects(jsonData) {
   filterList();
 }
 
+// this function sorts through the secondJson and determins bloodtype by lastname
 function checkBloodtypeStat(lastname){
   console.log("lastname", lastname);
-  if(bloodList.half.includes(lastname)){
+  if ( bloodList.half.includes(lastname)){
     return "half";
     console.log("half");
   }
@@ -133,6 +134,12 @@ function checkBloodtypeStat(lastname){
     return "muggle";
   }}
 
+// TODO: 
+// function InqSquad(){
+// in this function it should be posible to add only PURE BLOODE stud to the 
+// inqSquad or removed. this could be done by checking the secondJson for bloodtype
+// this should also incl. a WARNING if one tries to add non pure blodded to the squad.
+// }
 
 
 // this function filters the array of students befor pasing it allong to be sortet.
@@ -168,6 +175,7 @@ function sortList(filteredList) {
   displayList(filteredList);
 }
 
+// these functions sorts our filteredList by the variables compare..
 function sortByFirstname(filteredList) {
   filteredList.sort(compareFirstname);
 }
@@ -179,37 +187,34 @@ function sortByHouse(filteredList) {
 }
 
 
-//  the next 3 functions
+//  these 3 functions loops through the array of filteredList to determine 
+// the alphabetical position of the parameters given( firstname, lastname and house)
 function compareFirstname(a, b) {
   if (a.firstname < b.firstname) {
     return -1;
   } else {
     return 1;
   }
-
   // console.log("compareFirstname");
 }
-
 function compareLastname(a, b) {
   if (a.lastname < b.lastname) {
     return -1;
   } else {
     return 1;
   }
-
-  console.log("compareLastname");
+  // console.log("compareLastname");
 }
-
 function compareHouse(a, b) {
   if (a.house < b.house) {
     return -1;
   } else {
     return 1;
   }
-
   // console.log("compareHouse");
 }
 
+// this function expells student by filtering the through the student.id
 function expellStudent(student) {
 	// this is adding the expelled student into an array of the expelled students.
     expelledStudArray.push(student);
@@ -219,13 +224,18 @@ function expellStudent(student) {
 
     filteredList = filteredList.filter(elem => elem.id !== student.id);
 
-    // redisplay "new" array but now without the students that has been expelled
+    // re-display "new" array but now without the students that has been expelled
   displayList(filteredList);
   // console.log(student);
 
-	// change stats after a person is removed
-    // updateStatistics();
+	// TODO: change stats after a person is expelled
+    // StudentStats();
 }
+
+// TODO: function StudentStats(){
+// this should display a list of the expelled student
+// }
+
 
 function displayList(student) {
   // this clears our student list after filtering
@@ -237,32 +247,31 @@ function displayList(student) {
 
 // the VISUEL part of the code
 
+// this function prepares the student data to be dispalyed in list of students
 function displayStudent(student) {
   // console.log(student);
 
   // creates a clone from our student
   let studentclone = document.querySelector("template#student").content.cloneNode(true);
 
-  // this sets the data for the clone
+  // this sets the data for the studentclone
   studentclone.querySelector("[data-field=firstname]").textContent = student.firstname;
   studentclone.querySelector("[data-field=lastname]").textContent = student.lastname;
   studentclone.querySelector("[data-field= house]").textContent = student.house;
   
-
+// listens for the buttons
   studentclone.querySelector("[data-field=firstname]").addEventListener("click", ()=> {
     showModal(student);
   });
   studentclone.querySelector("[data-action= remove]").addEventListener("click", ()=>{
   expellStudent(student)
 });
-
-  // then oure clone is appendet to our list
+  // this appendet the studentclone to our list in the tbody in HTML
   document.querySelector("#list tbody").appendChild(studentclone);
 }
 
+// this function is acctually what is dispalyed through the DOM
 function showModal(student) {
-
-  // console.log(student);
   // this is the data that is displayed in the modal view when student is clicked
   modal.classList.add("show");
   modal.querySelector(".modalName").textContent = student.fullname;
@@ -281,7 +290,6 @@ function showModal(student) {
   } else {
     modal.querySelector("#modal-content").classList.remove("gryffindor");
   }
-
   if (student.house == "Hufflepuff") {
     modal.querySelector("[class= modalCrest]").src =
       "imgCrests/Hufflepuff.png";
@@ -289,7 +297,6 @@ function showModal(student) {
   } else {
     modal.querySelector("#modal-content").classList.remove("hufflepuf");
   }
-
   if (student.house == "Ravenclaw") {
     modal.querySelector("[class= modalCrest]").src =
       "imgCrests/Ravenclaw.png";
@@ -297,7 +304,6 @@ function showModal(student) {
   } else {
     modal.querySelector("#modal-content").classList.remove("ravenclaw");
   }
-
   if (student.house == "Slytherin") {
     modal.querySelector("[class= modalCrest]").src =
       "imgCrests/Slytherin.png";
@@ -310,7 +316,7 @@ function showModal(student) {
   modal.querySelector("button").addEventListener("click", hideModal);
 }
 
-// this is hiding the modal from the dom
+// this removes/hides the modal from the dom
 function hideModal() {
   modal.classList.remove("show");
 }
