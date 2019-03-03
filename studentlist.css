@@ -139,7 +139,7 @@ nav{
 #modal-content button{
   position: absolute;
   margin-top: 6px;
-  margin-left: 15px;
+  margin-left: 28px;
 }
 
 #modal.show {
@@ -147,11 +147,13 @@ nav{
   pointer-events: all;
 }
 
- #modalImage {
+ .modalImage {
   object-fit: scale-down;
   margin-top: 4vw;
 }
 
-/* .modalCrest{
-  TODO: re-size the crest!!
-} */
+.modalCrest{
+  /* TODO: re-size the crest!! */
+  width: 16vh;
+
+} 

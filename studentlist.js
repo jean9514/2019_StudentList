@@ -8,6 +8,7 @@ let Student = {
   firstname: "-student-firstname-",
   lastname: "-student-lastname-",
   house: "-house-",
+  bloodType: "-bloodtype-",
   imagename: "-imagename-",
   crest: "-crest-"
 };
@@ -17,11 +18,12 @@ let allStudents = [];
 let filteredList = [];
 let expelledStudArray = [];
 let sorting = " ";
+let bloodList  = [];
 let modal = document.querySelector("#modal");
 
 
 function init() {
-  console.log("init");
+  // console.log("init");
 
   document.querySelectorAll(".filter-button").forEach(button => {
     button.addEventListener("click", clickFilterHouse);
@@ -63,13 +65,14 @@ function loadSecondJSON() {
   console.log("loadJSON");
   fetch("http://petlatkea.dk/2019/hogwarts/families.json")
     .then(response => response.json())
-    .then(myJson => {
-      // when the json-file gets loaded, it prepares objects.
-      // prepareObjects(myJson);
-      loadJSON();
-    });
+    .then(getBlood)
 }
 
+function getBlood(bloodData){
+  bloodList = bloodData;
+  loadJSON();
+  console.log(bloodList.pure);
+}
 
 // this functions displayes the choosen filter button
 function clickFilterHouse( event ) {
@@ -101,6 +104,8 @@ function prepareObjects(jsonData) {
     // this should be accessed directly from the json-file and not split like the fullname
     student.house = jsonObject.house;
 
+    student.bloodType = checkBloodtypeStat(student.lastname);
+
     // this is how we connect the img-files to the lastname of the students.
     const lastnameLowcase = parts[parts.length - 1].toLowerCase();
     const firstletterLowcase = parts[0].substring(0, 1).toLowerCase();
@@ -111,8 +116,23 @@ function prepareObjects(jsonData) {
     allStudents.push(student);
   });
 
+  filteredList = allStudents;
   filterList();
 }
+
+function checkBloodtypeStat(lastname){
+  console.log("lastname", lastname);
+  if(bloodList.half.includes(lastname)){
+    return "half";
+    console.log("half");
+  }
+  if ( bloodList.pure.includes(lastname)){
+    return "pure";
+  }
+  else{
+    return "muggle";
+  }}
+
 
 
 // this function filters the array of students befor pasing it allong to be sortet.
@@ -126,8 +146,8 @@ function filterList( ) {
     }
   }
 
-  let filteredList = allStudents.filter( filterByHouse );
-  console.log( filteredList );
+  filteredList = allStudents.filter( filterByHouse );
+  // console.log( filteredList );
 
   // the sortList should be filtered befor displayed as SORTED.
   sortList(filteredList);
@@ -135,7 +155,7 @@ function filterList( ) {
 
 // this functions returns the array of sorted students after the click on the button
 function sortList(filteredList) {
-  console.log("sortList");
+  // console.log("sortList");
 
   if (sorting === "first") {
     sortByFirstname(filteredList);
@@ -167,7 +187,7 @@ function compareFirstname(a, b) {
     return 1;
   }
 
-  console.log("compareFirstname");
+  // console.log("compareFirstname");
 }
 
 function compareLastname(a, b) {
@@ -187,24 +207,21 @@ function compareHouse(a, b) {
     return 1;
   }
 
-  console.log("compareHouse");
+  // console.log("compareHouse");
 }
 
 function expellStudent(student) {
 	// this is adding the expelled student into an array of the expelled students.
     expelledStudArray.push(student);
 
-	// remove the student from the 
-    allStudents = allStudents.filter(elem => elem.id !== student.id);
-
     // remove the student from the original student array 
     allStudents = allStudents.filter(elem => elem.id !== student.id);
 
-    filteredList = filteredList.filter(student => student.id !== student.id);
+    filteredList = filteredList.filter(elem => elem.id !== student.id);
 
     // redisplay "new" array but now without the students that has been expelled
   displayList(filteredList);
-  console.log(student);
+  // console.log(student);
 
 	// change stats after a person is removed
     // updateStatistics();
@@ -221,7 +238,7 @@ function displayList(student) {
 // the VISUEL part of the code
 
 function displayStudent(student) {
-  console.log(student);
+  // console.log(student);
 
   // creates a clone from our student
   let studentclone = document.querySelector("template#student").content.cloneNode(true);
@@ -245,13 +262,13 @@ function displayStudent(student) {
 
 function showModal(student) {
 
-  console.log(student);
-  // this is whats displayed in the modal view when student is clicked
+  // console.log(student);
+  // this is the data that is displayed in the modal view when student is clicked
   modal.classList.add("show");
   modal.querySelector(".modalName").textContent = student.fullname;
   modal.querySelector(".modalImage").src = student.imagename;
   modal.querySelector(".modalHouse").textContent = student.house;
-  
+  modal.querySelector(".modalBloodType").textContent = "Bloodtype: " + student.bloodType;
 
   // TODO :could this be made simplere? more compact maby so you'll only have 
   // one if -else statement? 
