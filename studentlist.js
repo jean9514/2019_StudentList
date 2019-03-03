@@ -4,6 +4,7 @@ window.addEventListener("DOMContentLoaded", init);
 
 // global variabel of our student prototype
 let Student = {
+  fullname: "-fullname_",
   firstname: "-student-firstname-",
   lastname: "-student-lastname-",
   house: "-house-",
@@ -70,6 +71,8 @@ function prepareObjects(jsonData) {
 
     //the data from our Json-file that we want to split.
     const parts = jsonObject.fullname.split(" ");
+
+    student.fullname = jsonObject.fullname;
 
     // how we want the data to be displayed:
     student.firstname = parts[0];
@@ -202,6 +205,7 @@ function displayStudent(student) {
 
 function showModal(student) {
 
+  console.log(student);
   // NOTE! i can get fullname and crest to show, if i un toggle the 
   //when clicked, this is dispalyed within the modal view
   modal.classList.add("show");
