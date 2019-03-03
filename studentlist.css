@@ -134,24 +134,24 @@ nav{
   /* background-color: rgba(250, 250, 250, 1); */
   margin: 0 auto;
   margin-top: 10px;
-  
-
 }
 
 #modal-content button{
   position: absolute;
   margin-top: 6px;
   margin-left: 15px;
- 
 }
 
 #modal.show {
   opacity: 1;
   pointer-events: all;
-
 }
 
  #modalImage {
   object-fit: scale-down;
   margin-top: 4vw;
 }
+
+/* .modalCrest{
+  TODO: re-size the crest!!
+} */

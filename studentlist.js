@@ -14,6 +14,7 @@ let Student = {
 
 let selectedFilter = "All Students";
 let allStudents = [];
+let filteredList = [];
 let expelledStudArray = [];
 let sorting = " ";
 let modal = document.querySelector("#modal");
@@ -199,8 +200,10 @@ function expellStudent(student) {
     // remove the student from the original student array 
     allStudents = allStudents.filter(elem => elem.id !== student.id);
 
+    filteredList = filteredList.filter(student => student.id !== student.id);
+
     // redisplay "new" array but now without the students that has been expelled
-  displayList(allStudents);
+  displayList(filteredList);
   console.log(student);
 
 	// change stats after a person is removed
@@ -236,7 +239,6 @@ function displayStudent(student) {
   expellStudent(student)
 });
 
-
   // then oure clone is appendet to our list
   document.querySelector("#list tbody").appendChild(studentclone);
 }
@@ -244,12 +246,17 @@ function displayStudent(student) {
 function showModal(student) {
 
   console.log(student);
-  
+  // this is whats displayed in the modal view when student is clicked
   modal.classList.add("show");
   modal.querySelector(".modalName").textContent = student.fullname;
   modal.querySelector(".modalImage").src = student.imagename;
   modal.querySelector(".modalHouse").textContent = student.house;
   
+
+  // TODO :could this be made simplere? more compact maby so you'll only have 
+  // one if -else statement? 
+
+  // this adds crests and house color to the modal when student is displayed
   if (student.house == "Gryffindor") {
     modal.querySelector("[class= modalCrest]").src =
       "imgCrests/Gryffindor.png";
@@ -260,7 +267,7 @@ function showModal(student) {
 
   if (student.house == "Hufflepuff") {
     modal.querySelector("[class= modalCrest]").src =
-      "imgCrests/Hunfflepuff.png";
+      "imgCrests/Hufflepuff.png";
     modal.querySelector("#modal-content").classList.add("hufflepuf");
   } else {
     modal.querySelector("#modal-content").classList.remove("hufflepuf");
@@ -282,8 +289,6 @@ function showModal(student) {
     modal.querySelector("#modal-content").classList.remove("slytherin");
   }
 
-  
-  
   //when clicked, closes the modal
   modal.querySelector("button").addEventListener("click", hideModal);
 }
